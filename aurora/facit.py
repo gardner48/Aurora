@@ -4,6 +4,7 @@
 #-----------------------------------------------------------------------------
 
 import numpy as np
+from scipy.integrate import trapezoid
 
 class FACIT:
     '''
@@ -991,8 +992,8 @@ class FACIT:
             averaged QV, dimension of input QV is lowered by 1
         '''
         
-        denom = np.trapz(JV, axis=-1)
-        Qavg  = np.trapz(QV*JV, axis=-1)/denom
+        denom = trapezoid(JV, axis=-1)
+        Qavg  = trapezoid(QV*JV, axis=-1)/denom
     
         return Qavg
     

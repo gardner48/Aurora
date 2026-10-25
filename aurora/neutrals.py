@@ -32,7 +32,7 @@ plt.ion()
 import urllib
 import shutil, os, copy
 from scipy.constants import e, h, c as c_light, Rydberg
-from scipy.interpolate import interp2d
+from scipy.interpolate import RectBivariateSpline
 import requests
 
 from . import plot_tools
@@ -254,14 +254,16 @@ def get_exc_state_ratio(
 
     if rad_prof is not None:
         # evaluate along radial profiles
-        gc_interp = interp2d(atom.ne, atom.Te, ground_coupling.T)
-        gc = np.array([float(gc_interp(XX, YY)) for XX, YY in zip(ne, Te)])
-        cc_interp = interp2d(atom.ne, atom.Te, cont_coupling.T)
-        cc = np.array([float(cc_interp(XX, YY)) for XX, YY in zip(ne, Te)])
+        gc_interp = RectBivariateSpline(atom.ne, atom.Te, ground_coupling, kx=1, ky=1)
+        gc = gc_interp.ev(ne, Te)
+        cc_interp = RectBivariateSpline(atom.ne, atom.Te, cont_coupling, kx=1, ky=1)
+        cc = cc_interp.ev(ne, Te)
     else:
-        # evaluate at all combinations of points
-        gc = interp2d(atom.ne, atom.Te, ground_coupling.T)(ne, Te).T
-        cc = interp2d(atom.ne, atom.Te, cont_coupling.T)(ne, Te).T
+        # evaluate at all combinations of points, result has shape (len(ne), len(Te))
+        _ne = np.atleast_1d(ne)[:, None]
+        _Te = np.atleast_1d(Te)[None, :]
+        gc = RectBivariateSpline(atom.ne, atom.Te, ground_coupling, kx=1, ky=1).ev(_ne, _Te)
+        cc = RectBivariateSpline(atom.ne, atom.Te, cont_coupling, kx=1, ky=1).ev(_ne, _Te)
 
         N1 = np.rollaxis(np.tile(N1, (cc.shape[0], cc.shape[1], 1)), axis=2)
         ni = np.rollaxis(np.tile(ni, (cc.shape[0], cc.shape[1], 1)), axis=2)
@@ -432,14 +434,10 @@ def Lya_to_neut_dens(
         cont_coupling = atom.res["n2ii_n1"]
 
         # atomic data is on a grid in units of cm^-3, eV
-        gc_interp = interp2d(atom.ne, atom.Te, ground_coupling.T)
-        gc = np.array(
-            [float(gc_interp(XX, YY)) for XX, YY in zip(ne, Te)]
-        )  # Nm/N1 from exc
-        cc_interp = interp2d(atom.ne, atom.Te, cont_coupling.T)
-        cc = np.array(
-            [float(cc_interp(XX, YY)) for XX, YY in zip(ne, Te)]
-        )  # Nm/N1 from recomb
+        gc_interp = RectBivariateSpline(atom.ne, atom.Te, ground_coupling, kx=1, ky=1)
+        gc = gc_interp.ev(ne, Te)  # Nm/N1 from exc
+        cc_interp = RectBivariateSpline(atom.ne, atom.Te, cont_coupling, kx=1, ky=1)
+        cc = cc_interp.ev(ne, Te)  # Nm/N1 from recomb
 
         # ground state density
         # N1 = (N2 - cc * ni)/gc

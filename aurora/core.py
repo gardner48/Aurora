@@ -28,7 +28,7 @@ from scipy.interpolate import interp1d
 from scipy.constants import e as q_electron, m_p
 import pickle as pkl
 from copy import deepcopy
-from scipy.integrate import cumulative_trapezoid
+from scipy.integrate import cumulative_trapezoid, trapezoid
 from scipy.linalg import solve_banded
 import matplotlib.pyplot as plt
 from . import interp
@@ -2063,8 +2063,8 @@ class aurora_sim:
                 print("Warning: significant error in particle conservation!")
 
             Ntot = reservoirs["integ_source"][-1]
-            dN = np.trapz((reservoirs["total"] / Ntot - reservoirs["integ_source"] / Ntot) ** 2, self.time_out)
-            dN /= np.trapz((reservoirs["integ_source"] / Ntot) ** 2, self.time_out)
+            dN = trapezoid((reservoirs["total"] / Ntot - reservoirs["integ_source"] / Ntot) ** 2, self.time_out)
+            dN /= trapezoid((reservoirs["integ_source"] / Ntot) ** 2, self.time_out)
             print('Particle conservation error %.1f%%' % (np.sqrt(dN) * 100))
         
             ax2.set_xlim(self.time_out[[0, -1]])

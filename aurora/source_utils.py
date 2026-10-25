@@ -27,6 +27,7 @@ import numpy as np
 import copy, sys
 from scipy.constants import m_p, e as q_electron
 from scipy.special import erfc
+from scipy.integrate import trapezoid
 import matplotlib.pyplot as plt
 
 
@@ -265,7 +266,7 @@ def lbo_source_function(t_start, t_rise, t_fall, n_particles=1.0, time_vec=None)
         lbo = np.exp((1 - 4 * tf * (T - ts) / tr**2) / (4 * (tf / tr) ** 2)) * (erfc((T - ts) / tr - 1 / (2 * tf / tr)) - 2)
 
         # scale source to correspond to the given total number of particles
-        lbo *= N / np.trapz(lbo, T)
+        lbo *= N / trapezoid(lbo, T)
 
         # ensure that source function ends with 0 to avoid numerical issues
         lbo[[0, -1]] = 0

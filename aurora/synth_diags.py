@@ -23,6 +23,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
+from scipy.integrate import trapezoid
 import matplotlib.tri as tri
 
 plt.ion()
@@ -85,7 +86,7 @@ def line_int_weights(
         asym = 1.0
 
     # compute weights by summing over beam/ray path
-    weights = np.trapz(response[None] * asym, dist_path, axis=2)
+    weights = trapezoid(response[None] * asym, dist_path, axis=2)
 
     return weights
 

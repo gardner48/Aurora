@@ -28,7 +28,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 plt.ion()
-from scipy.interpolate import RectBivariateSpline, interp1d, interp2d
+from scipy.interpolate import RectBivariateSpline, RegularGridInterpolator, interp1d
 import copy, itertools
 
 from .janev_smith_rates import js_sigma
@@ -105,10 +105,11 @@ def get_neutrals_fsa(neutrals, geqdsk, debug_plots=True):
             for ii, name in enumerate(names):
                 dens = neutrals[beam][f"n={n_level}"][ii]
 
-                f = interp2d(
-                    rr, zz, dens.T, kind="linear", bounds_error=False, fill_value=0.0
+                f = RegularGridInterpolator(
+                    (rr, zz), dens, method="linear", bounds_error=False, fill_value=0.0
                 )
-                tmp = f(Rgrid, Zgrid)
+                RR, ZZ = np.meshgrid(Rgrid, Zgrid)  # shape (nZ, nR), as interp2d returned
+                tmp = f((RR, ZZ))
 
                 tmp[tmp < 0] = 0.0
                 neutrals_ext[beam][f"n={n_level}"][name] = tmp

@@ -23,7 +23,7 @@
 import numpy as np, sys, os
 from scipy.interpolate import interp1d, RectBivariateSpline
 import copy
-from scipy.ndimage.interpolation import map_coordinates
+from scipy.ndimage import map_coordinates
 from scipy.interpolate import InterpolatedUnivariateSpline
 from . import grids_utils
 

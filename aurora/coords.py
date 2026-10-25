@@ -25,6 +25,7 @@ from scipy.interpolate import interp1d, RectBivariateSpline
 import copy
 from scipy.ndimage import map_coordinates
 from scipy.interpolate import InterpolatedUnivariateSpline
+from ._optional import require_omfit
 from . import grids_utils
 
 
@@ -93,12 +94,8 @@ def vol_average(
 
     if geqdsk is None:
         # Fetch device geqdsk from MDS+ and post-process it using the OMFIT geqdsk format.
-        try:
-            from omfit_classes import omfit_eqdsk
-        except:
-            raise ValueError(
-                "Could not import omfit_classes.omfit_eqdsk! Install with pip install omfit_classes"
-            )
+        require_omfit()
+        from omfit_classes import omfit_eqdsk
         geqdsk = omfit_eqdsk.OMFITgeqdsk("").from_mdsplus(
             device=device,
             shot=shot,
@@ -328,6 +325,7 @@ def rhoTheta2RZ(geqdsk, rho, theta, coord_in='rhop', n_line=201):
         Values of the vertical coordinate along flux surfaces.
     '''
     if isinstance(geqdsk, str):
+        require_omfit()
         from omfit_classes.omfit_eqdsk import OMFITgeqdsk
         geqdsk = OMFITgeqdsk(geqdsk)
         

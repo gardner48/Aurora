@@ -34,6 +34,7 @@ from matplotlib import collections as mc
 from heapq import nsmallest
 import warnings
 from scipy import constants
+from ._optional import require_omfit
 from . import plot_tools
 from . import coords
 
@@ -113,6 +114,7 @@ class solps_case:
                 )
 
         if self.form == "files":
+            require_omfit()
             from omfit_classes import omfit_solps
 
             self.b2fstate = omfit_solps.OMFITsolps(self.b2fstate_path)
@@ -206,6 +208,7 @@ class solps_case:
                 # user explicitly requested not to use geqdsk functionality
                 self.geqdsk = None
             else:
+                require_omfit()
                 from omfit_classes import omfit_eqdsk
 
                 if isinstance(kwargs["geqdsk"], str):
@@ -215,6 +218,7 @@ class solps_case:
                     # assume geqdsk was already loaded via OMFITgeqdsk
                     self.geqdsk = kwargs["geqdsk"]
         else:
+            require_omfit()
             from omfit_classes import omfit_eqdsk
 
             # try to find gEQDSK and load it
@@ -255,6 +259,7 @@ class solps_case:
             return getattr(self, varname)
         elif self.form == "mdsplus":
             # try fetching from MDS+
+            require_omfit()
             from omfit_classes import omfit_mds
 
             # cache quantities fetched from MDS+ to increase speed
@@ -383,6 +388,7 @@ class solps_case:
         b2_za = self.b2fstate["zamin"] if self.form == "files" else self.data("za")
 
         # import here to avoid issues when building docs or package
+        require_omfit()
         from omfit_classes.utils_math import atomic_element, toRoman
 
         self.b2_species = {}

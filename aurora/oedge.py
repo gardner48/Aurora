@@ -20,6 +20,7 @@ from matplotlib.colors import LogNorm
 
 from scipy.interpolate import griddata, interp1d
 
+from ._optional import require_omfit
 from . import radiation
 
 
@@ -266,6 +267,7 @@ class oedge_input(dict):
         data_width = 10
 
         # import here to avoid issues during regression tests
+        require_omfit()
         from omfit_classes.utils_base import tolist
 
         # create output list
@@ -586,6 +588,7 @@ class oedge_output:
             self.output_nc_file = str(output_nc_file)
 
         # import omfit_classes here to prevent import during regression tests
+        require_omfit()
         from omfit_classes.omfit_nc import OMFITnc
 
         # Load in the output netCDF file
@@ -2351,6 +2354,7 @@ class oedge_output:
             ).transpose(1, 0, 2)
         else:
             # find impurity species atomic symbol
+            require_omfit()
             from omfit_classes import utils_math
 
             key = list(utils_math.atomic_element(Z=self.cion).keys())[0]
@@ -2630,6 +2634,7 @@ class oedge_output:
 def interpret(x, item=None):
 
     # import here to avoid issues during regression tests
+    require_omfit()
     from omfit_classes.omfit_namelist import namelist
 
     # condition to deal with some EIRENE settings

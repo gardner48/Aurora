@@ -26,6 +26,7 @@ import matplotlib.pyplot as plt
 import numpy as np, sys, os
 from scipy.interpolate import interp1d
 import warnings
+from ._optional import require_omfit
 
 
 def create_radial_grid(namelist, plot=False):
@@ -725,6 +726,7 @@ def estimate_boundary_distance(shot, device, time_ms):
         taken to be 2/3 of the bound_sep distance.
     """
     # import this here, so that it is not required for the whole package
+    require_omfit()
     from omfit_classes.omfit_mds import OMFITmdsValue
 
     try:

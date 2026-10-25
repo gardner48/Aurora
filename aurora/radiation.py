@@ -1255,7 +1255,7 @@ def get_local_spectrum(
         raise ValueError("Unrecognized adf15_file format!")
 
     # import here to avoid issues when building docs or package
-    from omfit_classes.utils_math import atomic_element
+    from .elements import atomic_element
 
     # get nuclear charge Z and atomic mass number A
     out = atomic_element(symbol=trs.attrs["element"])

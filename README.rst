@@ -44,6 +44,12 @@ Aurora can be installed from PyPI using
     
 You can omit the `--user` flag if you have write-access to the default package directory on your system and wish to install there.
 
+Some features rely on the optional `omfit_classes` package: reading gEQDSK files, fetching data from MDSplus, and the SOLPS and OEDGE utilities. To install Aurora together with these dependencies, use
+
+    pip install "aurorafusion[omfit]"
+
+Note that `omfit_classes` currently requires NumPy < 2.0 and SciPy < 1.14, which limits this option to Python 3.12 or older. The default installation, without the extra, works with current versions of Python, NumPy and SciPy.
+
 Installing via conda is also possible using
 
     conda install -c conda-forge aurorafusion 

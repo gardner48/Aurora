@@ -1781,22 +1781,22 @@ def get_mdsmap():
     """Load dictionary allowing a mapping of chosen variables with
     SOLPS variable names on MDS+.
     """
-    ident = "\IDENT::TOP:"
-    identimp = "\IDENT::TOP.IMPSEP"
-    identomp = "\IDENT::TOP.OMPSEP"
+    ident = r"\IDENT::TOP:"
+    identimp = r"\IDENT::TOP.IMPSEP"
+    identomp = r"\IDENT::TOP.OMPSEP"
 
-    snapshot_root = "\SOLPS::TOP.SNAPSHOT:"
-    snaptopdims = "\SNAPSHOT::TOP.DIMENSIONS:"
-    snaptopgrid = "\SNAPSHOT::TOP.GRID:"
-    snaptop = "\SNAPSHOT::TOP:"
+    snapshot_root = r"\SOLPS::TOP.SNAPSHOT:"
+    snaptopdims = r"\SNAPSHOT::TOP.DIMENSIONS:"
+    snaptopgrid = r"\SNAPSHOT::TOP.GRID:"
+    snaptop = r"\SNAPSHOT::TOP:"
 
-    timedept1 = "\TIMEDEP::TOP.TARGET1:"
-    timedept2 = "\TIMEDEP::TOP.TARGET2:"
-    timedept3 = "\TIMEDEP::TOP.TARGET3:"
-    timedept4 = "\TIMEDEP::TOP.TARGET4:"
+    timedept1 = r"\TIMEDEP::TOP.TARGET1:"
+    timedept2 = r"\TIMEDEP::TOP.TARGET2:"
+    timedept3 = r"\TIMEDEP::TOP.TARGET3:"
+    timedept4 = r"\TIMEDEP::TOP.TARGET4:"
 
-    timedepomp = "\TIMEDEP::TOP.OMP:"
-    timedepimp = "\TIMEDEP::TOP.IMP:"
+    timedepomp = r"\TIMEDEP::TOP.OMP:"
+    timedepimp = r"\TIMEDEP::TOP.IMP:"
 
     return {
         # general

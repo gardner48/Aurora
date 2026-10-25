@@ -1490,7 +1490,7 @@ class oedge_output:
 
         for ii, ax in enumerate(axs.flatten()):
             field = fields[ii]
-            spl = re.split("(\d+)", field)
+            spl = re.split(r"(\d+)", field)
             if len(spl) > 1:
                 field = spl[0]
                 charge = int(spl[1])

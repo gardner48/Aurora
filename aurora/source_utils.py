@@ -150,7 +150,7 @@ def get_source_time_history(namelist, Raxis_cm, time, plot = False):
         fig, ax = plt.subplots()
         fig.suptitle('External particle source')
         ax.set_xlabel('time [s]')
-        ax.set_ylabel('$\Gamma_{{source}}$ [s$^{{-1}}$]'),
+        ax.set_ylabel(r'$\Gamma_{{source}}$ [s$^{{-1}}$]'),
         ax.plot(time, source)
         ax.set_ylim(0, None)
         ax.set_xlim(time[0],time[-1])

@@ -177,7 +177,7 @@ class ehr5_file:
                 label=labels[i],
             )
 
-        ax.set_xlabel("$\log T_e\ \mathrm{[eV]}$", fontsize=16)
+        ax.set_xlabel(r"$\log T_e\ \mathrm{[eV]}$", fontsize=16)
         ax.set_ylabel(field, fontsize=16)
         ax.legend()
 

@@ -143,11 +143,11 @@ def vol_average(
 def rV_vol_average(quant, r_V):
     """Calculate a volume average of the given radially-dependent quantity on a r_V grid.
     This function makes useof the fact that the r_V radial coordinate, defined as
-    :math:`r_V = \sqrt{ V / (2 \pi^2 R_{axis} }`,
+    :math:`r_V = \\sqrt{ V / (2 \\pi^2 R_{axis} }`,
     maps shaped volumes onto a circular geometry, making volume averaging a trivial
     operation via
-    :math:`\langle Q \rangle = \Sigma_i Q(r_i) 2 \pi \ \Delta r_V`
-    where :math:`\Delta r_V` is the spacing between radial points in r_V.
+    :math:`\\langle Q \rangle = \\Sigma_i Q(r_i) 2 \\pi \\ \\Delta r_V`
+    where :math:`\\Delta r_V` is the spacing between radial points in r_V.
 
     Note that if the input r_V coordinate is extended outside the LCFS,
     this function will return the effective volume average also in the SOL, since it is
